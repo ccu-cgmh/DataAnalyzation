@@ -9,7 +9,7 @@ TimeDiff = -5.467;
 SE = readmatrix('0621Sensor/SensorData-5.csv');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Read Model Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-S = csvread('0621-location-Mark/0621-5-location-Mark/¥k¸}½ïlocation.csv', 0, 0);
+S = csvread('0621-location-Mark/0621-5-location-Mark/å³è…³è¸location.csv', 0, 0);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Read VICON Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 OP = csvread('OpticalOutput/RANK_HITA_02.csv', 0, 0);
@@ -61,13 +61,13 @@ acc_mag = sqrt(acc(:,1).*acc(:,1) + acc(:,2).*acc(:,2) + acc(:,3).*acc(:,3));
 % acc_magFilt = filtfilt(b, a, acc_magFilt);
 
 if isHand == 0
-    acc_threshold = 1;
-    mag_threshold = 20;
+    acc_threshold = 2;
+    mag_threshold = 40;
     DistThreshold = 0.5; %50cm
     VThreshold = 1;
 else
-    acc_threshold = 1;
-    mag_threshold = 20;
+    acc_threshold = 2;
+    mag_threshold = 40;
     DistThreshold = 0.8; %80cm
     VThreshold = 3;
 end
@@ -85,7 +85,7 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Accelerations'
     plot(T2(1:length(acc(:,3))), acc(:,3), 'b');
     plot(T2(1:length(acc_mag)), acc_mag, ':k');
     plot(T2(1:length(stationary)), stationary, 'k', 'LineWidth', 2);
-    title('¬ïÀ¹Accelerations');
+    title('ç©¿æˆ´Accelerations');
     xlabel('Time (s)');
     ylabel('Accelerations(m/s/s)');
     legend('X', 'Y', 'Z');
@@ -97,7 +97,7 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'GYR');
     plot(T2(1:length(Gyroscope(:,3))), Gyroscope(:,3), 'b');
     plot(T2(1:length(gyr_magFilt)), gyr_magFilt, ':k');
     plot(T2(1:length(stationary)), stationary, 'k', 'LineWidth', 2);
-    title('¬ïÀ¹GYR');
+    title('ç©¿æˆ´GYR');
     xlabel('Time (s)');
     ylabel('Accelerations(m/s/s)');
     legend('X', 'Y', 'Z');
@@ -121,7 +121,7 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Orign Velocity
     plot(T2(1:length(ori_vel(:,1))), ori_vel(:,1), 'r');
     plot(T2(1:length(ori_vel(:,2))), ori_vel(:,2), 'g');
     plot(T2(1:length(ori_vel(:,3))), ori_vel(:,3), 'b');
-    title('¬ïÀ¹ORI_Velocity');
+    title('ç©¿æˆ´ORI_Velocity');
     xlabel('Time (s)');
     ylabel('Velocity(m/s)');
     legend('X', 'Y', 'Z');
@@ -150,7 +150,7 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Velocity');
     plot(T2(1:length(vel(:,1))), vel(:,1), 'r');
     plot(T2(1:length(vel(:,2))), vel(:,2), 'g');
     plot(T2(1:length(vel(:,3))), vel(:,3), 'b');
-    title('¬ïÀ¹Velocity');
+    title('ç©¿æˆ´Velocity');
     xlabel('Time (s)');
     ylabel('Velocity(m/s)');
     legend('X', 'Y', 'Z');
@@ -159,7 +159,7 @@ SE_Velocity1D = sqrt(vel(:,1).*vel(:,1) + vel(:,2).*vel(:,2) + vel(:,3).*vel(:,3
 figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Velocity');
     hold on;
     plot(T2(1:length(SE_Velocity1D)), SE_Velocity1D, 'r');
-    title('¬ïÀ¹Velocity1D');
+    title('ç©¿æˆ´Velocity1D');
     xlabel('Time (s)');
     ylabel('Velocity(m/s)');
     hold off;
@@ -168,11 +168,11 @@ pos = zeros(size(vel));
 for t = 3:length(pos)
     pos(t,:) = pos(t-1,:) + vel(t-1,:) * (TimeStampDiff(t-2)/1000);
 end
-LineDistList = []; %¥X®±ª½½u¶ZÂ÷
-PathDistList = []; %¥X®±¸ô®|¶ZÂ÷
-ActionStartList = []; %°Ê§@°_ÂI
-ActionEndList = []; %°Ê§@°_ÂI
-MaxVelList = []; %³Ì¤j³t«×
+LineDistList = []; %å‡ºæ‹³ç›´ç·šè·é›¢
+PathDistList = []; %å‡ºæ‹³è·¯å¾‘è·é›¢
+ActionStartList = []; %å‹•ä½œèµ·é»ž
+ActionEndList = []; %å‹•ä½œèµ·é»ž
+MaxVelList = []; %æœ€å¤§é€Ÿåº¦
 % stationaryEnd(6) = 844;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i = 1:numel(stationaryEnd)
     PunchDist = 0;
@@ -210,24 +210,24 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Position');
     plot(T2(1:length(pos(:,1))), pos(:,1), 'r');
     plot(T2(1:length(pos(:,2))), pos(:,2), 'g');
     plot(T2(1:length(pos(:,3))), pos(:,3), 'b');
-    title('¬ïÀ¹Position');
+    title('ç©¿æˆ´Position');
     xlabel('Time (s)');
     ylabel('Position(m)');
     legend('X', 'Y', 'Z');
     hold off;
 for i=1:length(ActionStartList)
     disp('Sensor');
-    disp(['²Ä' num2str(i) '®±']);
-    disp(['¶}©l®É¶¡: ' num2str(T2(ActionStartList(i)))]);
-    disp(['µ²§ô®É¶¡: ' num2str(T2(ActionEndList(i)-1))]);
-    disp(['«ùÄò®É¶¡: ' num2str(T2(ActionEndList(i)-1) - T2(ActionStartList(i))) ' (s)']);
-    disp(['ª½½u¶ZÂ÷: ' num2str(LineDistList(i)) ' (cm)']);
-    disp(['­y¸ñ¶ZÂ÷: ' num2str(PathDistList(i)) ' (cm)']);
-    disp(['³Ì¤j³t«×: ' num2str(MaxVelList(i)) ' (m/s)']);
+    disp(['ç¬¬' num2str(i) 'æ‹³']);
+    disp(['é–‹å§‹æ™‚é–“: ' num2str(T2(ActionStartList(i)))]);
+    disp(['çµæŸæ™‚é–“: ' num2str(T2(ActionEndList(i)-1))]);
+    disp(['æŒçºŒæ™‚é–“: ' num2str(T2(ActionEndList(i)-1) - T2(ActionStartList(i))) ' (s)']);
+    disp(['ç›´ç·šè·é›¢: ' num2str(LineDistList(i)) ' (cm)']);
+    disp(['è»Œè·¡è·é›¢: ' num2str(PathDistList(i)) ' (cm)']);
+    disp(['æœ€å¤§é€Ÿåº¦: ' num2str(MaxVelList(i)) ' (m/s)']);
     fprintf('\n');
 end
 disp('--------------------------------------------');
-disp('¼Ò«¬');
+disp('æ¨¡åž‹');
 [datanumS, dia] = size(S);
 DataS = S(1:datanumS, :);
 DataSX = DataS(:,1)/100;
@@ -244,19 +244,19 @@ VelocitySZ = VelocitySZ(2:length(DataSZ));
 S_Velocity1D = sqrt(VelocitySX.*VelocitySX + VelocitySY.*VelocitySY + VelocitySZ.*VelocitySZ);
 for i = 1:numel(ActionStartList)
     SE_DIST_SUM(i) = 0;
-    disp(['²Ä' num2str(i) '®±']);
+    disp(['ç¬¬' num2str(i) 'æ‹³']);
     SE_DIST_LINE(i) = sqrt((DataSX(ActionEndList(i)) - DataSX(ActionStartList(i)))^2 + (DataSY(ActionEndList(i)) - DataSY(ActionStartList(i)))^2 + (DataSZ(ActionEndList(i)) - DataSZ(ActionStartList(i)))^2);
-    disp(['ª½½u¶ZÂ÷: ' num2str(SE_DIST_LINE(i)*100) ' (cm)']);
+    disp(['ç›´ç·šè·é›¢: ' num2str(SE_DIST_LINE(i)*100) ' (cm)']);
     for ii=ActionStartList(i):ActionEndList(i)
         SE_DIST_SUM(i) = SE_DIST_SUM(i) + sqrt((DataSX(ii)-DataSX(ii-1))^2 + (DataSY(ii)-DataSY(ii-1))^2 + (DataSZ(ii)-DataSZ(ii-1))^2);
     end
-    disp(['­y¸ñ¶ZÂ÷: ' num2str(SE_DIST_SUM(i)*100) ' (cm)']);
+    disp(['è»Œè·¡è·é›¢: ' num2str(SE_DIST_SUM(i)*100) ' (cm)']);
     [MaxVel,Index] = max(S_Velocity1D(ActionStartList(i):ActionEndList(i)));
-    disp(['³Ì¤j³t«×: ' num2str(MaxVel) ' (m/s)']);
+    disp(['æœ€å¤§é€Ÿåº¦: ' num2str(MaxVel) ' (m/s)']);
     fprintf('\n');
 end
 disp('--------------------------------------------');
-disp('¥ú¾Ç');
+disp('å…‰å­¸');
 [datanum, dia] = size(OP);
 OPData = OP(1:datanum-2, :);
 NewOPDataX = (OPData(:,1) - OPData(1,1))/1000;
@@ -285,7 +285,7 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Velocity');
     plot(T(1:length(VelocityX)), VelocityX, 'r');
     plot(T(1:length(VelocityY)), VelocityY, 'g');
     plot(T(1:length(VelocityZ)), VelocityZ, 'b');
-    title('¥ú¾ÇVelocity');
+    title('å…‰å­¸Velocity');
     xlabel('Time (s)');
     ylabel('Velocity(m/s)');
     legend('X', 'Y', 'Z');
@@ -294,7 +294,7 @@ OP_Velocity1D = sqrt(VelocityX.*VelocityX + VelocityY.*VelocityY + VelocityZ.*Ve
 figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', 'Velocity');
     hold on;
     plot(T(1:length(OP_Velocity1D)), OP_Velocity1D, 'r');
-    title('¥ú¾ÇVelocity');
+    title('å…‰å­¸Velocity');
     xlabel('Time (s)');
     ylabel('Velocity(m/s)');
     hold off;
@@ -305,48 +305,48 @@ figure('Position', [9 39 900 600], 'NumberTitle', 'off', 'Name', '2Velocity');
     title('2Velocity');
     xlabel('Time (s)');
     ylabel('Velocity(m/s)');
-    legend('¥ú¾Ç', '¬ïÀ¹');
+    legend('å…‰å­¸', 'ç©¿æˆ´');
     hold off;
 
 for i = 1:numel(ActionStartList)
-    disp(['²Ä' num2str(i) '®±']);
+    disp(['ç¬¬' num2str(i) 'æ‹³']);
     OP_DIST_SUM(i) = 0;
     START = round((T2(ActionStartList(i)) + TimeDiff) * 100);
     END = round((T2(ActionEndList(i)) + TimeDiff) * 100);
     OP_DIST_LINE(i) = sqrt((NewOPDataX(END) - NewOPDataX(START))^2 + (NewOPDataY(END) - NewOPDataY(START))^2 + (NewOPDataZ(END) - NewOPDataZ(START))^2);
-    disp(['ª½½u¶ZÂ÷: ' num2str(OP_DIST_LINE(i)*100) ' (cm)']);
+    disp(['ç›´ç·šè·é›¢: ' num2str(OP_DIST_LINE(i)*100) ' (cm)']);
     for ii=START:END
         OP_DIST_SUM(i) = OP_DIST_SUM(i) + sqrt((NewOPDataX(ii)-NewOPDataX(ii-1))^2 + (NewOPDataY(ii)-NewOPDataY(ii-1))^2 + (NewOPDataZ(ii)-NewOPDataZ(ii-1))^2);
     end
-    disp(['­y¸ñ¶ZÂ÷: ' num2str(OP_DIST_SUM(i)*100) ' (cm)']);
+    disp(['è»Œè·¡è·é›¢: ' num2str(OP_DIST_SUM(i)*100) ' (cm)']);
     [MaxVel,Index] = max(OP_Velocity1D(START:END));
-    disp(['³Ì¤j³t«×: ' num2str(MaxVel) ' (m/s)']);
+    disp(['æœ€å¤§é€Ÿåº¦: ' num2str(MaxVel) ' (m/s)']);
     fprintf('\n');
 end
 
 disp('--------------------------------------------');
 for i = 1:numel(ActionStartList)
-    disp(['²Ä' num2str(i) '®±          ª½½u¶ZÂ÷               ­y¸ñ¶ZÂ÷               ³Ì¤j³t«×']);
+    disp(['ç¬¬' num2str(i) 'æ‹³          ç›´ç·šè·é›¢               è»Œè·¡è·é›¢               æœ€å¤§é€Ÿåº¦']);
     START = round((T2(ActionStartList(i)) + TimeDiff) * 100);
     END = round((T2(ActionEndList(i)) + TimeDiff) * 100);
     [MaxVelOP,~] = max(OP_Velocity1D(START:END));
-    disp(['¥ú¾Ç    ->   ' num2str(OP_DIST_LINE(i)*100) ' (cm)          ' num2str(OP_DIST_SUM(i)*100) ' (cm)          ' num2str(MaxVelOP) ' (m/s)']);
+    disp(['å…‰å­¸    ->   ' num2str(OP_DIST_LINE(i)*100) ' (cm)          ' num2str(OP_DIST_SUM(i)*100) ' (cm)          ' num2str(MaxVelOP) ' (m/s)']);
     [MaxVelM,~] = max(S_Velocity1D(ActionStartList(i):ActionEndList(i)));
-    disp(['¼Ò«¬    ->   ' num2str(SE_DIST_LINE(i)*100) ' (cm)          ' num2str(SE_DIST_SUM(i)*100) ' (cm)          ' num2str(MaxVelM) ' (m/s)']);
+    disp(['æ¨¡åž‹    ->   ' num2str(SE_DIST_LINE(i)*100) ' (cm)          ' num2str(SE_DIST_SUM(i)*100) ' (cm)          ' num2str(MaxVelM) ' (m/s)']);
     [MaxVelSE,~] = max(SE_Velocity1D(ActionStartList(i):ActionEndList(i)));
-    disp(['sensor¡@->   ' num2str(LineDistList(i)) ' (cm)          ' num2str(PathDistList(i)) ' (cm)          ' num2str(MaxVelSE) ' (m/s)']);
+    disp(['sensorã€€->   ' num2str(LineDistList(i)) ' (cm)          ' num2str(PathDistList(i)) ' (cm)          ' num2str(MaxVelSE) ' (m/s)']);
     fprintf('\n');
 end
 disp('--------------------------------------------');
-disp('»~®t');
+disp('èª¤å·®');
 for i = 1:numel(ActionStartList)
-    disp(['²Ä' num2str(i) '®±          ª½½u¶ZÂ÷               ­y¸ñ¶ZÂ÷               ³Ì¤j³t«×']);
+    disp(['ç¬¬' num2str(i) 'æ‹³          ç›´ç·šè·é›¢               è»Œè·¡è·é›¢               æœ€å¤§é€Ÿåº¦']);
     START = round((T2(ActionStartList(i)) + TimeDiff) * 100);
     END = round((T2(ActionEndList(i)) + TimeDiff) * 100);
     [MaxVelOP,~] = max(OP_Velocity1D(START:END));
     [MaxVelM,~] = max(S_Velocity1D(ActionStartList(i):ActionEndList(i)));
     [MaxVelSE,~] = max(SE_Velocity1D(ActionStartList(i):ActionEndList(i)));
-    disp(['¼Ò«¬    ->   ' num2str(((SE_DIST_LINE(i)) - (OP_DIST_LINE(i))) / (OP_DIST_LINE(i)) * 100) ' (%)          ' num2str(((SE_DIST_SUM(i)) - (OP_DIST_SUM(i))) / (OP_DIST_SUM(i)) * 100) ' (%)          ' num2str((MaxVelM - MaxVelOP) / MaxVelOP * 100) ' (%)']);
-    disp(['sensor¡@->   ' num2str(((LineDistList(i)/100) - (OP_DIST_LINE(i))) / (OP_DIST_LINE(i)) * 100) ' (%)          ' num2str(((PathDistList(i)/100) - (OP_DIST_SUM(i))) / (OP_DIST_SUM(i)) * 100) ' (%)          ' num2str((MaxVelSE - MaxVelOP) / MaxVelOP * 100) ' (%)']);
+    disp(['æ¨¡åž‹    ->   ' num2str(((SE_DIST_LINE(i)) - (OP_DIST_LINE(i))) / (OP_DIST_LINE(i)) * 100) ' (%)          ' num2str(((SE_DIST_SUM(i)) - (OP_DIST_SUM(i))) / (OP_DIST_SUM(i)) * 100) ' (%)          ' num2str((MaxVelM - MaxVelOP) / MaxVelOP * 100) ' (%)']);
+    disp(['sensorã€€->   ' num2str(((LineDistList(i)/100) - (OP_DIST_LINE(i))) / (OP_DIST_LINE(i)) * 100) ' (%)          ' num2str(((PathDistList(i)/100) - (OP_DIST_SUM(i))) / (OP_DIST_SUM(i)) * 100) ' (%)          ' num2str((MaxVelSE - MaxVelOP) / MaxVelOP * 100) ' (%)']);
     fprintf('\n');
 end
